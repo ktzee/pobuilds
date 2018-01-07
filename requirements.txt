@@ -2,3 +2,4 @@ flask
 pymysql
 flask-sqlalchemy
 flask-script
+request
