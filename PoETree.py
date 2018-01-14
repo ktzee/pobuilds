@@ -1,5 +1,4 @@
 class PoETree():
-    def __init__(self):
-        self.nodeId = ""
-        self.nodeName = ""
-        self.node
+    def __init__(self, nodes, version):
+        self.nodes = nodes
+        self.treeVersion = version

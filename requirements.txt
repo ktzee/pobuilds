@@ -3,3 +3,4 @@ pymysql
 flask-sqlalchemy
 flask-script
 request
+untangle
