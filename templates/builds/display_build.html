@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Display Build{% endblock %}
+
+{% block content %}
+    <p>This build was made for: {{ buildxml.PathOfBuilding.Build['targetVersion'].replace("_", ".") }}</p>
+    <p>Class Used: {{ buildxml.PathOfBuilding.Build['className'] }}</p>
+    <p>Ascendancy: {{ buildxml.PathOfBuilding.Build['ascendClassName'] }}</p>
+    <p>Bandic Choice: {{ buildxml.PathOfBuilding.Build['bandit'] }}</p>
+    <p>Life Total: {{ statlist["Life"]}}</p>
+    <p>Life Incresed %: {{ statlist["Spec:LifeInc"] }}</p>
+
+    <a href="{{ buildxml.PathOfBuilding.Tree.Spec[0].URL.cdata.strip() }}"><h4>Passive Skill Tree</h4></a>
+
+    <div class="container">
+        <h2>Keystones</h2>
+        <div class="row">
+        {% for keystone in keystonemap %}
+            <div class="col">
+                <h4>{{ keystone['dn'] }}</h4>
+                <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
