@@ -1,1 +1,1 @@
-web: gunicorn deploy:pobuilds
+web: PYTHONPATH=`pwd`/.. gunicorn pobuilds:app
