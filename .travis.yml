@@ -1,0 +1,15 @@
+## Travis CI Integration
+
+language: python
+
+cache: apt
+
+install:
+  - sudo apt-get update
+
+script:
+
+after_success:
+
+notifications:
+  email: false
