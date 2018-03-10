@@ -5,7 +5,7 @@
     <p>This build was made for: {{ builddata["metadata"]["targetVersion"] }}</p>
     <p>Class Used: {{ builddata["metadata"]["className"] }}</p>
     <p>Ascendancy: {{ builddata["metadata"]["ascendClassName"] }}</p>
-    <p>Bandic Choice: {{ builddata["metadata"]["bandit"] }}</p>
+    <p>Bandit Choice: {{ builddata["metadata"]["bandit"] }}</p>
     <p>Life Total: {{ builddata["stats"]["Life"]}}</p>
     <p>Life Incresed %: {{ builddata["stats"]["Spec:LifeInc"] }}</p>
 
@@ -16,7 +16,7 @@
     </p>
 
     {% if builddata["keystones"] | count > 0 %}
-    <h2>Keystones</h2>
+    <h2>Keystones on Final Tree</h2>
       <div class="row">
       {% for keystone in builddata["keystones"] %}
           <div class="col">
