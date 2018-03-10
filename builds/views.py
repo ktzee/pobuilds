@@ -74,12 +74,17 @@ def parseBuild():
         if node['not']:
             notablemap.append(node)
 
+    # Uniques list
+    itemdict = parseItems(buildxml.PathOfBuilding.Items.Item)
+    uniques = [v["item_name"] for k, v in itemdict.items() if v["rarity"] == "UNIQUE"]
+
     builddata = {
                 "stats":statlist,
                 "metadata":metadata,
                 "tree":specs,
                 "notables":notablemap,
-                "keystones":keystonemap
+                "keystones":keystonemap,
+                "uniques":set(uniques)
                 }
 
     print("builddata", builddata)

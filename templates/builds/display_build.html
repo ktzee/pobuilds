@@ -28,4 +28,8 @@
     {% else %}
       <p>No Keystones</>
     {% endif %}
+
+    {% for item in builddata["uniques"] %}
+      <p>{{ item }}</p>
+    {% endfor %}
 {% endblock %}

@@ -29,9 +29,7 @@ treePage = urlopen(treeURL).read().decode('UTF-8')
 passiveTreeJson = regex.search(treePage).group(1)
 passiveTreeData = json.loads(passiveTreeJson)
 passiveTreeNodelist = passiveTreeData["nodes"]
-# print(passiveTreeData["nodes"])
 
-# print(findnode(passiveTreeNodelist, 34567))
 # Use untangle to parse the XML
 doc = untangle.parse(xml)
 
@@ -45,16 +43,19 @@ print("Ascendancy: " + doc.PathOfBuilding.Build['ascendClassName'])
 print("Bandit Choice: " + doc.PathOfBuilding.Build['bandit'])
 print("Life Increased %: " + findStat(statlist, "Spec:LifeInc"))
 
+# SPECS/TREES
 # Dictionary of "Tree Name : Tree URL"
 specs = {}
 for spec in doc.PathOfBuilding.Tree.Spec:
     specs[spec["title"]] = spec.URL.cdata.strip()
-print(specs)
-
 # List containing all payloads from all URLs
 treedata = [v.strip().replace("https://www.pathofexile.com/passive-skill-tree/", "") for k, v in specs.items()]
-
+# We decode the largest payload (probably highest level tree)
 buildTree = decodeTree(max(treedata, key=len))
+
+# UNIQUES
+itemdict = parseItems(doc.PathOfBuilding.Items.Item)
+uniques = [v["item_name"] for k, v in itemdict.items() if v["rarity"] == "UNIQUE"]
 
 print("================")
 print("List of Keystone Nodes:")
@@ -81,3 +82,8 @@ for notable in notableMap:
     print(notable['dn'])
     # Print the notable bonuses
     # print(notable['sd'])
+
+print("================")
+print("List of Uniques:")
+print("================")
+print(uniques)

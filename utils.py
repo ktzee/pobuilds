@@ -38,6 +38,19 @@ def findNode(nodelist, buildnode):
 def cleanPastebin(pastebin):
     return urlopen(pastebin.replace("pastebin.com/", "pastebin.com/raw/")).read().decode('UTF-8')
 
+def parseItems(itemlist):
+    itemdict = {}
+    for item in itemlist:
+        itemfacts = item.cdata.strip().split("\n")
+        itemdict[item["id"]] = {
+            "variant":item["variant"],
+            "rarity":itemfacts[0].replace("Rarity: ", ""),
+            "item_name":itemfacts[1],
+            "item_type":itemfacts[2],
+            "level_req":itemfacts[7].replace("LevelReq: ", "")
+        }
+
+    return itemdict
 # should be modified to directly accept a json
 def loadPoeTree():
     # page containing the json
