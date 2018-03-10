@@ -22,8 +22,6 @@ def parseBuild():
     # Grab the build data from Pastebin
     buildstring = cleanPastebin(request.form['pastebinURL'])
 
-
-
     # Parse the XML and convert to Python object
     buildxml = untangle.parse(decode(buildstring))
 
@@ -42,22 +40,25 @@ def parseBuild():
                 "level": buildxml.PathOfBuilding.Build['level']
                 }
 
-    # Create the list for 1 or more trees
-    specs = []
+    speclist = []
+    # Untangle does some magic while creating the object so we need to
+    # handle the case in which we're not dealing with a list
     if not isinstance(buildxml.PathOfBuilding.Tree.Spec, (list)):
-        specs.append(buildxml.PathOfBuilding.Tree.Spec)
+        speclist.append(buildxml.PathOfBuilding.Tree.Spec)
     else:
-        specs = buildxml.PathOfBuilding.Tree.Spec[0:3]
+        speclist = buildxml.PathOfBuilding.Tree.Spec
 
-    # Extract only the binary data from the tree URL
-    treedata = []
-    for spec in specs:
-        #print(spec["title"])
-        # print(spec.URL.cdata.strip())
-        treedata.append(spec.URL.cdata.strip().replace("https://www.pathofexile.com/passive-skill-tree/", ""))
+    # Create the list for 1 or more trees
+    specs = {}
+    for spec in speclist:
+        specs[spec["title"]] = spec.URL.cdata.strip()
+    print(specs)
 
-    # Decode the payload of the first tree in the list
-    buildtree = decodeTree(treedata[0])
+    # Extract only the binary data from the trees URLs
+    treedata = [v.strip().replace("https://www.pathofexile.com/passive-skill-tree/", "") for k, v in specs.items()]
+
+    # Decode the payload of the longest tree in the list
+    buildtree = decodeTree(max(treedata, key=len))
 
     # Create a map of keystones used in the build
     keystonemap = []
@@ -76,10 +77,10 @@ def parseBuild():
     builddata = {
                 "stats":statlist,
                 "metadata":metadata,
-                "tree":specs[0].URL.cdata.strip(),
+                "tree":specs,
                 "notables":notablemap,
                 "keystones":keystonemap
                 }
 
-    print(builddata)
+    print("builddata", builddata)
     return render_template('builds/display_build.html', builddata=builddata)

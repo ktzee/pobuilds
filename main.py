@@ -45,13 +45,17 @@ print("Ascendancy: " + doc.PathOfBuilding.Build['ascendClassName'])
 print("Bandit Choice: " + doc.PathOfBuilding.Build['bandit'])
 print("Life Increased %: " + findStat(statlist, "Spec:LifeInc"))
 
-treedata = []
-for spec in doc.PathOfBuilding.Tree.Spec[0:3]:
-    print(spec["title"])
-    print(spec.URL.cdata.strip())
-    treedata.append(spec.URL.cdata.strip().replace("https://www.pathofexile.com/passive-skill-tree/", ""))
+# Dictionary of "Tree Name : Tree URL"
+specs = {}
+for spec in doc.PathOfBuilding.Tree.Spec:
+    specs[spec["title"]] = spec.URL.cdata.strip()
+print(specs)
 
-buildTree = decodeTree(treedata[0])
+# List containing all payloads from all URLs
+treedata = [v.strip().replace("https://www.pathofexile.com/passive-skill-tree/", "") for k, v in specs.items()]
+
+buildTree = decodeTree(max(treedata, key=len))
+
 print("================")
 print("List of Keystone Nodes:")
 print("================")

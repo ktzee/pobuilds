@@ -9,18 +9,23 @@
     <p>Life Total: {{ builddata["stats"]["Life"]}}</p>
     <p>Life Incresed %: {{ builddata["stats"]["Spec:LifeInc"] }}</p>
 
-    <a href="{{ builddata["tree"] }}"><h4>Passive Skill Tree</h4></a>
-    <p>Only one tree in the build is displayed</p>
+    <p><b>All Trees in the Build</b></br>
+    {% for k, v in builddata["tree"].items() %}
+    <a href="{{ v }}">{{ k }}</a></br>
+    {% endfor %}
+    </p>
 
-    <div class="container">
-        <h2>Keystones</h2>
-        <div class="row">
-        {% for keystone in builddata["keystones"] %}
-            <div class="col">
-                <h4>{{ keystone['dn'] }}</h4>
-                <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
-            </div>
-        {% endfor %}
-        </div>
+    {% if builddata["keystones"] | count > 0 %}
+    <h2>Keystones</h2>
+      <div class="row">
+      {% for keystone in builddata["keystones"] %}
+          <div class="col">
+              <h4>{{ keystone['dn'] }}</h4>
+              <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
+          </div>
+      {% endfor %}
     </div>
+    {% else %}
+      <p>No Keystones</>
+    {% endif %}
 {% endblock %}

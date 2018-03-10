@@ -4,5 +4,4 @@ flask-sqlalchemy
 flask-script
 request
 untangle
-gunicorn
-uwsgi
+watchdog
