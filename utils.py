@@ -5,6 +5,7 @@ import json
 from urllib.request import urlopen
 import re
 from BuildTree import BuildTree
+import pdb
 
 
 # Accepts a raw encoded string as argument, it replaces all "-" with "+" and all "_" with "/" and returns a decoded and decompressed string
@@ -51,6 +52,20 @@ def parseItems(itemlist):
         }
 
     return itemdict
+
+
+def parseGems(gemlist):
+    gemsdict = {}
+    for skill in gemlist:
+        if skill["enabled"] == 'true':
+            for gem in skill.Gem:
+                if gem["enabled"] == "true":
+                    if skill["slot"] in gemsdict:
+                        gemsdict[skill["slot"]].append([gem["nameSpec"], gem["level"]])
+                    else:
+                        gemsdict[skill["slot"]] = [[gem["nameSpec"], gem["level"]]]
+    return gemsdict
+    
 # should be modified to directly accept a json
 def loadPoeTree():
     # page containing the json

@@ -57,6 +57,9 @@ buildTree = decodeTree(max(treedata, key=len))
 itemdict = parseItems(doc.PathOfBuilding.Items.Item)
 uniques = [v["item_name"] for k, v in itemdict.items() if v["rarity"] == "UNIQUE"]
 
+# GEMS
+gemsdict = parseGems(doc.PathOfBuilding.Skills.Skill)
+
 print("================")
 print("List of Keystone Nodes:")
 print("================")
@@ -82,8 +85,15 @@ for notable in notableMap:
     print(notable['dn'])
     # Print the notable bonuses
     # print(notable['sd'])
-
 print("================")
 print("List of Uniques:")
 print("================")
 print(uniques)
+print("================")
+print("List of Gems:")
+print("================")
+for slot in gemsdict:
+    print(slot)
+    for gem in gemsdict[slot]:
+        print("|")
+        print("->", gem[0], "LVL:", gem[1])

@@ -10,17 +10,12 @@
         <form method="POST" action="{{ url_for('parseBuild') }}">
             <div class="form-group">
                 <label for="formGroupExampleInput">Import Path of Building build:</label>
-                <input type="text" class="form-control" name="pastebinURL" placeholder="Pastebin URL">
+                <input type="text" class="form-control" name="pastebinURL" placeholder="Pastebin URL" value="https://pastebin.com/ZBQHAF2U">
                 {% if message %}
                   <p>{{ message }}</p>
                 {% endif %}
             </div>
-            <div class="form-group">
-                    <label for="pobstring">Path of Building String</label>
-                    <textarea class="form-control" name="pobString">https://pastebin.com/ZBQHAF2U</textarea>
-                    </br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 </div>
 {% endblock %}

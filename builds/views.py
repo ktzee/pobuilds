@@ -28,9 +28,15 @@ def parseBuild():
     # PlayerStat list from the untangled XML
     allstats = buildxml.PathOfBuilding.Build.PlayerStat
     # Subset of stats to display
-    statsfilter = ["Spec:LifeInc", "AverageDamage", "Life", "Spec:ArmourInc"]
-    # Use comprehension to look for the stats we're interested in
-    statlist = {playerstat["stat"]:playerstat["value"] for playerstat in allstats if playerstat["stat"] in statsfilter}
+    statsfilter = [
+        "Spec:LifeInc", 
+        "AverageDamage", 
+        "Life", 
+        "Spec:ArmourInc", 
+        "LifeRegen"
+    ]
+    # Use comprehension to create an easier to use dictionary
+    statlist = {playerstat["stat"]:playerstat["value"] for playerstat in allstats} #  optional: if playerstat["stat"] in statsfilter
     # Extract interesting metadata from the "Build" tag
     metadata = {
                 "targetVersion": buildxml.PathOfBuilding.Build['targetVersion'].replace("_", "."),
@@ -78,14 +84,16 @@ def parseBuild():
     itemdict = parseItems(buildxml.PathOfBuilding.Items.Item)
     uniques = [v["item_name"] for k, v in itemdict.items() if v["rarity"] == "UNIQUE"]
 
+    # Gems list
+    gemsdict = parseGems(buildxml.PathOfBuilding.Skills.Skill)
+
     builddata = {
                 "stats":statlist,
                 "metadata":metadata,
                 "tree":specs,
                 "notables":notablemap,
                 "keystones":keystonemap,
-                "uniques":set(uniques)
+                "uniques":set(uniques),
+                "gems":gemsdict
                 }
-
-    print("builddata", builddata)
     return render_template('builds/display_build.html', builddata=builddata)
