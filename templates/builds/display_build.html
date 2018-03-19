@@ -43,7 +43,7 @@
             <td>{{ builddata["stats"]["EnergyShield"]}}</td>
             <td>{{ builddata["stats"]["Spec:EnergyShieldInc"] }}</td>
             <td>{{ builddata["stats"]["LifeRegen"] }}</td>
-            <td>{{ builddata["stats"]["LifeLeechGainRate"] }}</td>
+            <td>{{ builddata["stats"]["LifeLeechGainRate"].split(".")[0] }}</td>
           </tr>
         </tbody>
         <thead class="thead-light">
@@ -94,7 +94,8 @@
         </tbody>
     </table>
 </div>
-    <p><b>All Trees in the Build</b></br>
+
+    <h4>Passive Trees</h4>
     {% for k, v in builddata["tree"].items() %}
     <a href="{{ v }}">{{ k }}</a></br>
     {% endfor %}
@@ -102,27 +103,53 @@
 
     {% if builddata["keystones"] | count > 0 %}
     <h4>Keystones on Final Tree</h4>
-      <div class="row">
-      {% for keystone in builddata["keystones"] %}
-          <div class="col">
-              {{ keystone['dn'] }}</br>
-              <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
-          </div>
-      {% endfor %}
-    </div>
+      <table class="table-fit">
+        <thead>
+          <tr>
+          {% for keystone in builddata["keystones"] %}
+            <th>{{ keystone['dn'] }}</th>
+          {% endfor %}
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr>
+            {% for keystone in builddata["keystones"] %}
+            <td>
+                <a href="https://pathofexile.gamepedia.com/{{ keystone['dn'] }}">
+                <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
+                </a>
+            </td>
+            {% endfor %}
+          </tr> 
+        </tbody>
+      </table>                        
     {% else %}
-      <p>No Keystones</>
+      <p>No Keystones</p>
     {% endif %}
 
     <h4>Unique Items</h4>
     {% for item in builddata["uniques"] %}
       <a href="https://pathofexile.gamepedia.com/{{ item }}">{{ item }}</a></br>
     {% endfor %}
+
     <h4>Gems Setups</h4>
-    {% for slot in builddata["gems"] %}
-      <h6>{{ slot }}</h6>
-      {% for gem in builddata["gems"][slot] %}
-      <a href="https://pathofexile.gamepedia.com/{{ gem[0] }}">{{ gem[0] }}</a></br>
-      {% endfor %}
-    {% endfor %}
+    <table class="table">
+      <thead>
+        <tr>
+            {% for slot in builddata["gems"] %}
+            <th>{{ slot }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{% for gem in builddata["gems"][slot] %}
+              <a href="https://pathofexile.gamepedia.com/{{ gem[0] }}">{{ gem[0] }}</a></br>
+              {% endfor %}
+          </td>
+        </tr>
+      </tbody>
+            {% endfor %}
+    </table>
+
 {% endblock %}
