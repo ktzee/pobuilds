@@ -91,31 +91,31 @@
               <thead class="thead-light">OFFENSIVE STATS</thead>
               <tr>
                 <th>Hit Chance</th>
-                <td>{{ builddata["stats"]["HitChance"] }}</td>
+                <td>{{ builddata["stats"]["HitChance"] }}%</td>
               </tr>
               <tr>
                 <th>Total DPS</th>
-                <td>{{ builddata["stats"]["TotalDPS"] }}</td>
+                <td>{{ builddata["stats"]["TotalDPS"].split(".")[0] }}</td>
               </tr>
               <tr>
                 <th>Average Hit</th>
-                <td>{{ builddata["stats"]["AverageDamage"] }}%</td>
+                <td>{{ builddata["stats"]["AverageDamage"].split(".")[0] }}</td>
               </tr>
               <tr>
                 <th>Crit chance</th>
-                <td>{{ builddata["stats"]["CritChance"] }}%</td>
+                <td>{{ builddata["stats"]["CritChance"].split(".")[0] }}%</td>
               </tr>
               <tr>
                 <th>Crit Multi</th>
-                <td>{{ builddata["stats"]["CritMultiplier"] }}%</td>
+                <td>{{ builddata["stats"]["CritMultiplier"] }}x</td>
               </tr>
               <tr>
                 <th>DoT DPS</th>
-                <td>{{ builddata["stats"]["TotalDot"] }}%</td>
+                <td>{{ builddata["stats"]["TotalDot"].split(".")[0] }}</td>
               </tr>
               <tr>
                 <th>Poison DPS</th>
-                <td>{{ builddata["stats"]["WithPoisonDPS"] }}%</td>
+                <td>{{ builddata["stats"]["WithPoisonDPS"].split(".")[0] }}</td>
               </tr>
             </table>
           </div>

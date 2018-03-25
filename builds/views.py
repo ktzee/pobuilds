@@ -1,8 +1,8 @@
 from pobuilds import app
 from flask import request, render_template, redirect, url_for
-from utils import *
+from utils import cleanPastebin, decode, decodeTree, findNode, parseGems, parseItems
 import untangle
-from constants import *
+from constants import PASSIVETREENODELIST
 
 @app.route('/list')
 def listbuilds():
@@ -21,20 +21,10 @@ def parseBuild():
 
     # Grab the build data from Pastebin
     buildstring = cleanPastebin(request.form['pastebinURL'])
-
     # Parse the XML and convert to Python object
     buildxml = untangle.parse(decode(buildstring))
-
     # PlayerStat list from the untangled XML
     allstats = buildxml.PathOfBuilding.Build.PlayerStat
-    # Subset of stats to display
-    statsfilter = [
-        "Spec:LifeInc", 
-        "AverageDamage", 
-        "Life", 
-        "Spec:ArmourInc", 
-        "LifeRegen"
-    ]
     # Use comprehension to create an easier to use dictionary
     statlist = {playerstat["stat"]:playerstat["value"] for playerstat in allstats} #  optional: if playerstat["stat"] in statsfilter
     # Extract interesting metadata from the "Build" tag
@@ -53,40 +43,32 @@ def parseBuild():
         speclist.append(buildxml.PathOfBuilding.Tree.Spec)
     else:
         speclist = buildxml.PathOfBuilding.Tree.Spec
-
     # Create the list for 1 or more trees
     specs = {}
     for spec in speclist:
         specs[spec["title"]] = spec.URL.cdata.strip()
     print(specs)
-
     # Extract only the binary data from the trees URLs
     treedata = [v.strip().replace("https://www.pathofexile.com/passive-skill-tree/", "") for k, v in specs.items()]
-
     # Decode the payload of the longest tree in the list
     buildtree = decodeTree(max(treedata, key=len))
-
     # Create a map of keystones used in the build
     keystonemap = []
     for nodeid in buildtree.nodes:
         node = findNode(PASSIVETREENODELIST, nodeid)
         if node['ks']:
             keystonemap.append(node)
-
     # Create a map of notables used in the build
     notablemap = []
     for nodeid in buildtree.nodes:
         node = findNode(PASSIVETREENODELIST, nodeid)
         if node['not']:
             notablemap.append(node)
-
     # Uniques list
     itemdict = parseItems(buildxml.PathOfBuilding.Items.Item)
     uniques = [v["item_name"] for k, v in itemdict.items() if v["rarity"] == "UNIQUE"]
-
     # Gems list
     gemsdict = parseGems(buildxml.PathOfBuilding.Skills.Skill)
-
     builddata = {
                 "stats":statlist,
                 "metadata":metadata,
@@ -96,4 +78,6 @@ def parseBuild():
                 "uniques":set(uniques),
                 "gems":gemsdict
                 }
+
+
     return render_template('builds/display_build.html', builddata=builddata)

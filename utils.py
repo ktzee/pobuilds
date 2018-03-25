@@ -57,8 +57,9 @@ def parseItems(itemlist):
 def parseGems(gemlist):
     gemsdict = {}
     for skill in gemlist:
-        if skill["enabled"] == 'true':
+        if skill["enabled"] == 'true' and not skill["source"]:
             for gem in skill.Gem:
+                print(gem)
                 if gem["enabled"] == "true":
                     if skill["slot"] in gemsdict:
                         gemsdict[skill["slot"]].append([gem["nameSpec"], gem["level"]])
