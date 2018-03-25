@@ -2,154 +2,181 @@
 {% block title %}Display Build{% endblock %}
 
 {% block content %}
-<div class="table-responsive-sm">
-<h4>Build Info Recap</h4>
-    <table class="table">
-      <thead class="thead-dark">
+  <div class="row">
+    <div class="col-sm">
+      <table class="table table-sm table-hover">
+        <thead class="thead-light">INFO</thead>
         <tr>
           <th>Build Version</th>
-          <th>Class</th>
-          <th>Ascendancy</th>
-          <th>Bandit</th>
-          <th>Level</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
           <td>{{ builddata["metadata"]["targetVersion"] }}</td>
+        </tr>
+        <tr>
+          <th>Class</th>
           <td>{{ builddata["metadata"]["className"] }}</td>
+        </tr>
+        <tr>
+          <th>Ascendancy</th>
           <td>{{ builddata["metadata"]["ascendClassName"] }}</td>
+        </tr>
+        <tr>
+          <th>Bandit</th>
           <td>{{ builddata["metadata"]["bandit"] }}</td>
+        </tr>
+        <tr>
+          <th>Level</th>
           <td>{{ builddata["metadata"]["level"] }}</td>
         </tr>
-      </tbody>
-    </table>
-<h4>Defensive Stats</h4>
-    <table class="table table-sm">
-      <thead class="thead-light">
+      </table>
+    </div>
+    <div class="col-sm">
+        <table class="table table-sm table-hover">
+          <thead class="thead-light">DEFENSIVE STATS</thead>
           <tr>
             <th>Life Total</th>
-            <th>Life Increased %</th>
-            <th>Energy Shield</th>
-            <th>Energy Shield Increased %</th>
-            <th>Life Regen</th>
-            <th>Life Leech Rate</th>
+            <td>{{ builddata["stats"]["Life"] }}</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
-            <td>{{ builddata["stats"]["Life"]}}</td>
-            <td>{{ builddata["stats"]["Spec:LifeInc"] }}</td>
-            <td>{{ builddata["stats"]["EnergyShield"]}}</td>
-            <td>{{ builddata["stats"]["Spec:EnergyShieldInc"] }}</td>
-            <td>{{ builddata["stats"]["LifeRegen"] }}</td>
-            <td>{{ builddata["stats"]["LifeLeechGainRate"].split(".")[0] }}</td>
+            <th>Life Increased</th>
+            <td>{{ builddata["stats"]["Spec:LifeInc"] }} %</td>
           </tr>
-        </tbody>
-        <thead class="thead-light">
+          <tr>
+            <th>Energy Shield</th>
+            <td>{{ builddata["stats"]["EnergyShield"] }}</td>
+          </tr>
+          <tr>
+            <th>Energy Shield Increased</th>
+            <td>{{ builddata["stats"]["Spec:EnergyShieldInc"] }} %</td>
+          </tr>
+          <tr>
+            <th>LifeRegen</th>
+            <td>{{ builddata["stats"]["LifeRegen"] }}/s</td>
+          </tr>
+          <tr>
+            <th>Life Leech Rate</th>
+            <td>{{ builddata["stats"]["LifeLeechGainRate"] }}/s</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm">
+          <table class="table table-sm table-hover">
+            <thead class="thead-light">DEFENSIVE STATS</thead>
             <tr>
               <th>Armour</th>
-              <th>Evasion</th>
-              <th>Fire Resist</th>
-              <th>Cold Resist</th>
-              <th>Lightning Resist</th>
-              <th>Chaos Resist</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
               <td>{{ builddata["stats"]["Armour"] }}</td>
+            </tr>
+            <tr>
+              <th>Evasion</th>
               <td>{{ builddata["stats"]["Evasion"] }}</td>
-              <td>{{ builddata["stats"]["FireResist"] }}</td>
-              <td>{{ builddata["stats"]["ColdResist"] }}</td>
-              <td>{{ builddata["stats"]["LightningResist"] }}</td>
-              <td>{{ builddata["stats"]["ChaosResist"] }}</td>
-          </tr>
-        </tbody>
-    </table>
-
-    <h4>Offensive Stats</h4>
-    <table class="table table-sm">
-      <thead class="thead-light">
-          <tr>
-            <th>Hit Chance</th>
-            <th>Total DPS</th>
-            <th>AverageDamage</th>
-            <th>Crit Chance %</th>
-            <th>Crit Multiplier</th>
-            <th>DoT DPS</th>
-            <th>Poison DPS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ builddata["stats"]["HitChance"] }}</td>
-            <td>{{ builddata["stats"]["TotalDPS"].split(".")[0] }}</td>
-            <td>{{ builddata["stats"]["AverageDamage"].split(".")[0] }}</td>
-            <td>{{ builddata["stats"]["CritChance"].split(".")[0] }}</td>
-            <td>{{ builddata["stats"]["CritMultiplier"] }}</td>
-            <td>{{ builddata["stats"]["TotalDot"] }}</td>
-            <td>{{ builddata["stats"]["WithPoisonDPS"].split(".")[0] }}</td>
-          </tr>
-        </tbody>
-    </table>
-</div>
-
-    <h4>Passive Trees</h4>
-    {% for k, v in builddata["tree"].items() %}
+            </tr>
+            <tr>
+              <th>Fire Resist</th>
+              <td>{{ builddata["stats"]["FireResist"] }}%</td>
+            </tr>
+            <tr>
+              <th>Cold Resist</th>
+              <td>{{ builddata["stats"]["ColdResist"] }}%</td>
+            </tr>
+            <tr>
+              <th>Lightning Resist</th>
+              <td>{{ builddata["stats"]["LightningResist"] }}%</td>
+            </tr>
+            <tr>
+              <th>Chaos Resist</th>
+              <td>{{ builddata["stats"]["ChaosResist"] }}%</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-sm">
+            <table class="table table-sm table-hover">
+              <thead class="thead-light">OFFENSIVE STATS</thead>
+              <tr>
+                <th>Hit Chance</th>
+                <td>{{ builddata["stats"]["HitChance"] }}</td>
+              </tr>
+              <tr>
+                <th>Total DPS</th>
+                <td>{{ builddata["stats"]["TotalDPS"] }}</td>
+              </tr>
+              <tr>
+                <th>Average Hit</th>
+                <td>{{ builddata["stats"]["AverageDamage"] }}%</td>
+              </tr>
+              <tr>
+                <th>Crit chance</th>
+                <td>{{ builddata["stats"]["CritChance"] }}%</td>
+              </tr>
+              <tr>
+                <th>Crit Multi</th>
+                <td>{{ builddata["stats"]["CritMultiplier"] }}%</td>
+              </tr>
+              <tr>
+                <th>DoT DPS</th>
+                <td>{{ builddata["stats"]["TotalDot"] }}%</td>
+              </tr>
+              <tr>
+                <th>Poison DPS</th>
+                <td>{{ builddata["stats"]["WithPoisonDPS"] }}%</td>
+              </tr>
+            </table>
+          </div>
+  </div>  
+  <h4>Passive Trees</h4>
+  {% for k, v in builddata["tree"].items() %}
     <a href="{{ v }}">{{ k }}</a></br>
-    {% endfor %}
-    </p>
+  {% endfor %}
+  </p>
 
-    {% if builddata["keystones"] | count > 0 %}
-    <h4>Keystones on Final Tree</h4>
-      <table class="table-fit">
-        <thead>
-          <tr>
-          {% for keystone in builddata["keystones"] %}
-            <th>{{ keystone['dn'] }}</th>
-          {% endfor %}
-          </tr>
-
-        </thead>
-        <tbody>
-          <tr>
-            {% for keystone in builddata["keystones"] %}
-            <td>
-                <a href="https://pathofexile.gamepedia.com/{{ keystone['dn'] }}">
-                <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
-                </a>
-            </td>
-            {% endfor %}
-          </tr> 
-        </tbody>
-      </table>                        
-    {% else %}
-      <p>No Keystones</p>
-    {% endif %}
-
-    <h4>Unique Items</h4>
-    {% for item in builddata["uniques"] %}
-      <a href="https://pathofexile.gamepedia.com/{{ item }}">{{ item }}</a></br>
-    {% endfor %}
-
-    <h4>Gems Setups</h4>
-    <table class="table">
+  {% if builddata["keystones"] | count > 0 %}
+  <h4>Keystones on Final Tree</h4>
+  <div class="row">
+    
+  </div>
+    <table class="table-fit">
       <thead>
         <tr>
-            {% for slot in builddata["gems"] %}
-            <th>{{ slot }}</th>
+        {% for keystone in builddata["keystones"] %}
+          <th>{{ keystone['dn'] }}</th>
+        {% endfor %}
         </tr>
+
       </thead>
       <tbody>
         <tr>
-          <td>{% for gem in builddata["gems"][slot] %}
-              <a href="https://pathofexile.gamepedia.com/{{ gem[0] }}">{{ gem[0] }}</a></br>
-              {% endfor %}
+          {% for keystone in builddata["keystones"] %}
+          <td>
+              <a href="https://pathofexile.gamepedia.com/{{ keystone['dn'] }}">
+              <img src="https://web.poecdn.com/image/{{ keystone['icon'] }}" class="img-thumbnail" alt="{{ keystone['dn'] }}">
+              </a>
           </td>
-        </tr>
+          {% endfor %}
+        </tr> 
       </tbody>
-            {% endfor %}
-    </table>
+    </table>                        
+  {% else %}
+    <p>No Keystones</p>
+  {% endif %}
 
+  <h4>Unique Items</h4>
+  {% for item in builddata["uniques"] %}
+    <a href="https://pathofexile.gamepedia.com/{{ item }}">{{ item }}</a></br>
+  {% endfor %}
+
+  <h4>Gems Setups</h4>
+  <table class="table">
+    <thead>
+      <tr>
+          {% for slot in builddata["gems"] %}
+          <th>{{ slot }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{% for gem in builddata["gems"][slot] %}
+            <a href="https://pathofexile.gamepedia.com/{{ gem[0] }}">{{ gem[0] }}</a></br>
+            {% endfor %}
+        </td>
+      </tr>
+    </tbody>
+          {% endfor %}
+  </table>
 {% endblock %}
