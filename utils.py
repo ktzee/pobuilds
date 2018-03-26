@@ -53,7 +53,6 @@ def parseItems(itemlist):
 
     return itemdict
 
-
 def parseGems(gemlist):
     gemsdict = {}
     # todo: refactor with list comprehension
@@ -61,6 +60,7 @@ def parseGems(gemlist):
         # filter out disabled skills and skills coming from Uniques
         if skill["enabled"] == 'true' and not skill["source"]:
             for gem in skill.Gem:
+                print(gem)
                 if gem["enabled"] == "true":
                     if skill["slot"] in gemsdict:
                         gemsdict[skill["slot"]].append([gem["nameSpec"], gem["level"]])
