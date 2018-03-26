@@ -6,15 +6,16 @@
       <title>{% block title %}{% endblock %}</title>
       <!-- Custom CSS -->
       <link rel="stylesheet" href="/static/css/custom.css">
-      <!-- Bootstrap -->
+      <!-- Bootstrap 
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      -->
+      <!-- Slate Bootstrap Theme -->
+      <link rel="stylesheet" href="/static/css/custom.css">
       {% block head %}{% endblock %}
     </head>
     <body>
       <div class="container">
-        <div>
         {% block content %}{% endblock %}
-        </div>
       </div>
     </body>
 </html>

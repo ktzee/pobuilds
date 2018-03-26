@@ -56,10 +56,11 @@ def parseItems(itemlist):
 
 def parseGems(gemlist):
     gemsdict = {}
+    # todo: refactor with list comprehension
     for skill in gemlist:
+        # filter out disabled skills and skills coming from Uniques
         if skill["enabled"] == 'true' and not skill["source"]:
             for gem in skill.Gem:
-                print(gem)
                 if gem["enabled"] == "true":
                     if skill["slot"] in gemsdict:
                         gemsdict[skill["slot"]].append([gem["nameSpec"], gem["level"]])
@@ -67,7 +68,7 @@ def parseGems(gemlist):
                         gemsdict[skill["slot"]] = [[gem["nameSpec"], gem["level"]]]
     return gemsdict
     
-# should be modified to directly accept a json
+# todo: should be modified to directly accept a json
 def loadPoeTree():
     # page containing the json
     treeURL = "https://www.pathofexile.com/passive-skill-tree"
