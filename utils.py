@@ -32,9 +32,9 @@ def findStat(statlist, stat):
             return(item['value'])
 
 def findNode(nodelist, buildnode):
-    for node in nodelist:
-        if node['id'] == buildnode:
-            return node
+    for k,v in nodelist.items():
+        if v["id"] == buildnode:
+            return v
 
 def cleanPastebin(pastebin):
     return urlopen(pastebin.replace("pastebin.com/", "pastebin.com/raw/")).read().decode('UTF-8')
